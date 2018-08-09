@@ -20,7 +20,7 @@
 const publicDir = 'dist/default/';
 
 /** not add `www` */
-const appDomain = 'rdlabo.jp';
+const appDomain = 'example.com';
 
 /** create accessable file */
 const debug = true;
