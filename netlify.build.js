@@ -64,7 +64,9 @@ class method {
   createJavaScriptFileServerPush(fileArray){
     let pushFile = '/*\n';
     fileArray.forEach(file => {
-      pushFile += '  Link: <' + this.__getFileName(file) + '>; rel=preload; as=script\n';
+      if(this.__getFileName(file)){
+        pushFile += '  Link: <' + this.__getFileName(file) + '>; rel=preload; as=script\n';
+      }
     });
     fs.writeFileSync(this.publicDir + '_headers', pushFile);
     if (this.debug) fs.writeFileSync(this.publicDir + 'headers.txt', pushFile);
@@ -83,7 +85,11 @@ class method {
       return (file.match(new RegExp(search)) !== null)
     });
 
-    return fileList[0];
+    if (fileList[0]) {
+      return fileList[0];
+    } else {
+      return false;
+    }
   }
 }
 
