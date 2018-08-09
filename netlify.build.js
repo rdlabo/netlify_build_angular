@@ -73,10 +73,12 @@ class method {
   }
 
   changeInlineStyleSheet(){
-    const stylesheet = fs.readFileSync(this.publicDir + this.__getFileName('styles')).toString();
-    const indexFile = fs.readFileSync(this.publicDir + 'index.html').toString();
-    const changeString = indexFile.replace(/\n\<link rel=(\"|\')stylesheet(\"|\')[^>]*>/g, '<style>' + stylesheet + '</style>');
-    fs.writeFileSync(this.publicDir + 'index.html', changeString);
+    if (this.__getFileName('styles')) {
+      const stylesheet = fs.readFileSync(this.publicDir + this.__getFileName('styles')).toString();
+      const indexFile = fs.readFileSync(this.publicDir + 'index.html').toString();
+      const changeString = indexFile.replace(/\n\<link rel=(\"|\')stylesheet(\"|\')[^>]*>/g, '<style>' + stylesheet + '</style>');
+      fs.writeFileSync(this.publicDir + 'index.html', changeString);
+    }
   }
 
   __getFileName(search){
