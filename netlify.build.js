@@ -49,23 +49,23 @@ class method {
   }
 
   createRobot(){
-    const robot = 'User-Agent: *' +
-      'Allow: /' +
-      'Host: ' + this.appDomain;
+    const robot = 'User-Agent: *\nAllow: /\nHost: ' + this.appDomain;
     fs.writeFileSync(this.publicDir + 'robot.txt', robot);
   }
 
   createRedirects(){
-    const robot = 'https://' + this.appDomain + '/*  https://www.' + this.appDomain + '/:splat  301';
-    fs.writeFileSync(this.publicDir + '_redirects', robot);
-    if (this.debug) fs.writeFileSync(this.publicDir + 'redirects.txt', robot);
+    if　(this.appDomain.split('.').length === 2){
+      const robot = 'https://' + this.appDomain + '/*  https://www.' + this.appDomain + '/:splat  301';
+      fs.writeFileSync(this.publicDir + '_redirects', robot);
+      if (this.debug) fs.writeFileSync(this.publicDir + 'redirects.txt', robot);
+    }
   }
 
-  createJavaScriptFileServerPush(fileArray){
+  createJavaScriptFileServerPush(fileArray, subDir = ''){
     let pushFile = '/*\n';
     fileArray.forEach(file => {
-      if(this.__getFileName(file)){
-        pushFile += '  Link: <' + this.__getFileName(file) + '>; rel=preload; as=script\n';
+      if(this.__getFileName(file, subDir)){
+        pushFile += '  Link: <' + subDir + this.__getFileName(file, subDir) + '>; rel=preload; as=script\n';
       }
     });
     fs.writeFileSync(this.publicDir + '_headers', pushFile);
@@ -81,8 +81,8 @@ class method {
     }
   }
 
-  __getFileName(search){
-    const files = fs.readdirSync(publicDir);
+  __getFileName(search, subDir = ''){
+    const files = fs.readdirSync(publicDir + subDir);
     const fileList = files.filter((file) => {
       return (file.match(new RegExp(search)) !== null)
     });
