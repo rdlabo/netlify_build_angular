@@ -31,6 +31,7 @@ Host: rdlabo.jp
 You can use naked domains with Netlify, but we recommend you always use the www version of the domain (eg. www.example.com) for your site. This makes it easier to take advantage of Netlify’s powerful CDN.
 ```
 https://rdlabo.jp/*  https://www.rdlabo.jp/:splat  301
+/* /index.html 200
 ```
 
 ### create `_headers` for ServerPush.
